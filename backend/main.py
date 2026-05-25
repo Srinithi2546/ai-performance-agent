@@ -8,6 +8,7 @@ from ai_service import analyze_metrics, analyze_deployment
 import json
 import asyncio
 from collections import defaultdict
+from fastapi.responses import FileResponse
 
 # ============================================
 # Data Stores (In-Memory for Demo)
@@ -210,6 +211,16 @@ async def get_dashboard():
         "ai_analysis": latest_analysis["metrics"],
         "timestamp": datetime.now().isoformat(),
     }
+
+# ============================================
+# get sdk response
+# ============================================
+
+@app.get("/sdk.js")
+async def sdk():
+    return FileResponse("sdk.js")
+
+
 
 # ============================================
 # Deployment Analysis Endpoint
