@@ -1,0 +1,8 @@
+node22/
+node/
+backend/.env
+.env
+.idea/
+.vscode/
+node_modules/
+__pycache__/
