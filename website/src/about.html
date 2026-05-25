@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>About — Panimalar Engineering</title>
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #1a4b8c;
+      --primary-dark: #0d2b5a;
+      --primary-light: #2a6bc5;
+      --secondary: #e63946;
+      --accent: #ff9e00;
+      --light: #f4f6f9;
+      --dark: #333;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 8px;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: var(--light);
+      padding: 0;
+      margin: 0;
+    }
+    
+    /* Layout */
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .section {
+      padding: 40px 0;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+      line-height: 1.2;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    h1:after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--accent);
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    
+    h4 {
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    
+    p {
+      margin-bottom: 1rem;
+    }
+    
+    .muted {
+      color: var(--gray);
+    }
+    
+    /* Cards */
+    .card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin-bottom: 30px;
+      transition: var(--transition);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Grid layouts */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .gallery-grid img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .gallery-grid img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Lists */
+    ul {
+      padding-left: 20px;
+      margin-bottom: 1rem;
+    }
+    
+    li {
+      margin-bottom: 8px;
+    }
+    
+    /* Mission & Vision Cards */
+    .mission-vision-card {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 25px;
+      border-radius: var(--border-radius);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .mission-vision-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: rotate(45deg);
+      transition: var(--transition);
+    }
+    
+    .mission-vision-card:hover::before {
+      transform: rotate(45deg) translate(10px, 10px);
+    }
+    
+    .mission-vision-card h4 {
+      color: white;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    
+    /* Management Team */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .team-member {
+      text-align: center;
+      padding: 10px;
+      background-color: var(--light);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+    
+    .team-member:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+    
+    .member-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    
+    .member-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--primary-dark);
+    }
+    
+    .member-role {
+      color: var(--secondary);
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    
+    /* Accordion for infrastructure */
+    .accordion {
+      margin-top: 20px;
+    }
+    
+    .accordion-item {
+      border: 1px solid var(--light-gray);
+      border-radius: var(--border-radius);
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    
+    .accordion-header {
+      padding: 15px 20px;
+      background-color: var(--light);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    .accordion-header:hover {
+      background-color: #e2e6ea;
+    }
+    
+    .accordion-header::after {
+      content: '+';
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+    
+    .accordion-item.active .accordion-header::after {
+      content: '-';
+    }
+    
+    .accordion-content {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    
+    .accordion-item.active .accordion-content {
+      padding: 20px;
+      max-height: 500px;
+    }
+    
+    /* Timeline for history */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 30px auto;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background-color: var(--primary);
+      transform: translateX(-50%);
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+      width: 50%;
+      padding: 0 40px;
+    }
+    
+    .timeline-item:nth-child(odd) {
+      left: 0;
+    }
+    
+    .timeline-item:nth-child(even) {
+      left: 50%;
+    }
+    
+    .timeline-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      right: -10px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 10px solid white;
+    }
+    
+    .timeline-item:nth-child(even) .timeline-content::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: -10px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-right: 10px solid white;
+    }
+    
+    .timeline-year {
+      position: absolute;
+      top: 20px;
+      width: 80px;
+      height: 30px;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+      font-weight: 600;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-year {
+      right: -40px;
+    }
+    
+    .timeline-item:nth-child(even) .timeline-year {
+      left: -40px;
+    }
+    
+    /* Accreditations */
+    .accreditations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .accreditation-badge {
+      background-color: var(--light);
+      padding: 15px 20px;
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    .accreditation-badge:hover {
+      background-color: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+    }
+    
+    /* Image overlay for gallery */
+    .image-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    
+    .image-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .overlay-content {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: var(--border-radius);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    
+    .overlay-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .overlay-close:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+      
+      .two-col {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .timeline::before {
+        left: 30px;
+      }
+      
+      .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 0;
+      }
+      
+      .timeline-item:nth-child(even) {
+        left: 0;
+      }
+      
+      .timeline-item:nth-child(odd) .timeline-year,
+      .timeline-item:nth-child(even) .timeline-year {
+        left: 10px;
+        right: auto;
+      }
+      
+      .timeline-item:nth-child(odd) .timeline-content::after,
+      .timeline-item:nth-child(even) .timeline-content::after {
+        left: -10px;
+        right: auto;
+        border-right: 10px solid white;
+        border-left: none;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .wrap {
+        padding: 0 15px;
+      }
+      
+      .section {
+        padding: 30px 0;
+      }
+      
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap section">
+    <h1>About Panimalar Engineering College</h1>
+    
+    <section class="card">
+      
+      <p class="muted">Panimalar Engineering College, a Christian Minority Institution of Higher Education governed by JAISAKTHI Educational Trust aims at imparting quality engineering and management education for the aspiring youth.</p>
+      <p class="muted">The College is accredited by National Board of Accreditation (NBA), New Delhi, approved by All India Council for Technical Education (AICTE) and recognized by UGC with 12(B) & 2(f) status. The college is located near Poonamallee, Chennai, and is well connected by road covering, Chennai, Kancheepuram and Thiruvallur districts. The Trust started Panimalar Engineering College in the year 2000 in accordance with the general policy of the Government of Tamil Nadu. The policy emphasizes to give high priority to meet the demand for trained engineers for various industrial and development projects in the state of Tamil Nadu and the rest of India.</p>
+
+      
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2000</div>
+          <div class="timeline-content">
+            <h4>College Established</h4>
+            <p>Panimalar Engineering College was founded with a vision to provide quality technical education.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">2005</div>
+          <div class="timeline-content">
+            <h4>NBA Accreditation</h4>
+            <p>Computer Science department received NBA accreditation, marking a milestone in quality education.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">2012</div>
+          <div class="timeline-content">
+            <h4>Campus Expansion</h4>
+            <p>New laboratories and infrastructure added to support growing student population and research initiatives.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">2020</div>
+          <div class="timeline-content">
+            <h4>Digital Transformation</h4>
+            <p>Implementation of smart classrooms and digital learning platforms to enhance the educational experience.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Mission & Vision</h2>
+      <div class="two-col">
+        <div class="mission-vision-card">
+          <h4>Our Vision</h4>
+          <p>To transform the budding engineers into academically excellent, highly intellectual and self disciplined engineering graduates to mould them as good citizens with the spirit of integrity and morality that would cater to the needs of our nation.</p>
+        </div>
+        <div class="mission-vision-card">
+          <h4>Our Mission</h4>
+          <p >• To impart quality education with high standards of excellence in engineering and technology.</p>
+          <p >• To provide an excellent infrastructure in a serene and conducive atmosphere that would motivate the students in their pursuit of knowledge in the field of engineering and technology.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Management Team</h2>
+      <p class="muted">Our leadership team brings together decades of experience in education and industry to guide the institution toward excellence.</p>
+      
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-avatar">PC</div>
+          <div class="member-name">Dr.P.Chinnadurai, M.A., Ph.D</div>
+          <div class="member-role">Secretary & Correspondent</div>
+          <p class="muted small">Our Secretary and Correspondent, Dr.P.Chinnadurai, M.A., Ph.D is the forerunner in implementing the vision of our chairman which is to foster excellence in education.He was awarded Ph.D. in Tamil literature by the University of Madras for his thesis on Humanitarianism in the poems of Subramanya Bharathiar. He has been a Member of Academic Council, Anna University in 2006-09.</p>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-avatar">CS</div>
+          <div class="member-name">Dr. C. Sakthi Kumar M.E., Ph.D</div>
+          <div class="member-role">Director</div>
+          <p class="muted small">Our Director, Dr. C. Sakthi Kumar M.E., Ph.D is an energetic young leader who not only gives innovative and improvising ideas but also sees that those are implemented without any delay. He has keen observation over minute details and always thinks of better prospects for Students, Staff and Institute.</p>
+        </div>
+        
+        <div class="team-member">
+          <div class="member-avatar">CV</div>
+          <div class="member-name">Mrs.C.Vijayarajeswari</div>
+          <div class="member-role">Director</div>
+          <p class="muted small">Tmt. C. Vijaya Rajeswari keeps the founding vision of the chairman alive through her participation in the curricular and extra curricular activities of the college. She follows Dr.Jeppiar’s mission of inculcating excellence in all her endeavours.
+
+One of the greatest Challenges and oppurtunities in the modern day is preparing today’s students for tomorrow’s needs.</p>
+        </div>
+      
+
+      <div class="team-member">
+          <div class="member-avatar">SS</div>
+          <div class="member-name">Dr.Saranya Sree Sakthi Kumar B.E.,M.B.A.,Ph.D</div>
+          <div class="member-role">Director</div>
+          <p class="muted small">Dr. Saranya Sree Sakthi Kumar B.E., M.B.A.,Ph.D. is focused in bringing out the true potential of our college. she is of the opinion that it is the responsibility of the educational institutions to empower the young techno brains of India so that the younger generation will succeed in the global mainstream.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Campus Infrastructure</h2>
+      <p class="muted">Our campus boasts state-of-the-art facilities designed to provide a comprehensive learning environment that supports both academic and personal growth.</p>
+      
+      <div class="accordion">
+        <div class="accordion-item">
+          <div class="accordion-header">Laboratories</div>
+          <div class="accordion-content">
+            <p>We have over 15 specialized laboratories equipped with modern equipment and software, including:</p>
+            <ul>
+              <li>Advanced Computing Lab with high-performance workstations</li>
+              <li>Electronics and Communication Lab with latest testing equipment</li>
+              <li>AI and Machine Learning Lab with GPU servers</li>
+              <li>Physics and Chemistry Labs with modern apparatus</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">Library</div>
+          <div class="accordion-content">
+            <p>Our central library houses over 50,000 volumes and provides access to numerous online journals and databases:</p>
+            <ul>
+              <li>Digital library with e-books and online resources</li>
+              <li>Quiet study zones and group discussion rooms</li>
+              <li>Access to IEEE, Springer, and other research databases</li>
+              <li>24/7 online resource availability</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">Sports & Recreation</div>
+          <div class="accordion-content">
+            <p>Comprehensive sports facilities to promote physical fitness and teamwork:</p>
+            <ul>
+              <li>Indoor stadium for basketball and badminton</li>
+              <li>Outdoor cricket and football grounds</li>
+              <li>Fitness center with modern equipment</li>
+              <li>Swimming pool and tennis courts</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <div class="accordion-header">Hostels & Accommodation</div>
+          <div class="accordion-content">
+            <p>Safe and comfortable accommodation for students:</p>
+            <ul>
+              <li>Separate hostels for boys and girls</li>
+              <li>24/7 security and Wi-Fi connectivity</li>
+              <li>Common rooms with TV and recreational facilities</li>
+              <li>Nutritious meals in hygienic mess facilities</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="gallery-grid">
+        <img src="https://www.panimalar.ac.in/assets/images/GreenCampus/14.png" alt="Campus Building">
+        <img src="https://www.panimalar.ac.in/assets/images/BE-CSE/lab/cc-29.png" alt="Engineering Lab">
+        <img src="https://www.panimalar.ac.in/assets/images/facilities/CL-II/1.png" alt="Library">
+        <img src="https://www.panimalar.ac.in/assets/images/academics/sports/21.png" alt="Sports Complex">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Accreditations & Approvals</h2>
+      <p class="muted">Our commitment to quality education is reflected in our accreditations and approvals from prestigious bodies.</p>
+      
+      <div class="accreditations">
+        <div class="accreditation-badge"><img src="https://www.panimalar.ac.in/assets/images/univ-logos/logo-3.png" width="50px" height="50px"> NBA Accredited: CSE,EEE,ECE,IT,MECH</div>
+        <div class="accreditation-badge"><img src="https://www.panimalar.ac.in/assets/images/univ-logos/logo-1.png" width="50px" height="50px"> AICTE Approved </div>
+        <div class="accreditation-badge"><img src="https://www.panimalar.ac.in/assets/images/univ-logos/logo-2.png" width="50px" height="50px"> Affiliated to Anna University</div>
+        <div class="accreditation-badge"><img src="https://www.panimalar.ac.in/assets/images/univ-logos/logo-4.png" width="50px" height="50px"> University Grants Commission Approved</div>
+        <div class="accreditation-badge"><img src="https://www.panimalar.ac.in/assets/images/univ-logos/logo-5.png" width="50px" height="50px"> PEC-AICTE IDEA LAB</div>
+        <div class="accreditation-badge"><img src="https://www.panimalar.ac.in/assets/images/univ-logos/logo-6.png" width="50px" height="50px"> IIC Approved</div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Image Overlay -->
+  <div class="image-overlay" id="imageOverlay">
+    <span class="overlay-close" id="closeOverlay">&times;</span>
+    <img class="overlay-content" id="overlayImage" src="" alt="">
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Accordion functionality
+      const accordionItems = document.querySelectorAll('.accordion-item');
+      
+      accordionItems.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        
+        header.addEventListener('click', () => {
+          // Close all other items
+          accordionItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('active');
+            }
+          });
+          
+          // Toggle current item
+          item.classList.toggle('active');
+        });
+      });
+      
+      // Image gallery overlay
+      const galleryImages = document.querySelectorAll('.gallery-grid img');
+      const overlay = document.getElementById('imageOverlay');
+      const overlayImage = document.getElementById('overlayImage');
+      const closeOverlay = document.getElementById('closeOverlay');
+      
+      galleryImages.forEach(img => {
+        img.addEventListener('click', () => {
+          overlayImage.src = img.src;
+          overlayImage.alt = img.alt;
+          overlay.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+      
+      closeOverlay.addEventListener('click', () => {
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+      
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+      });
+      
+      // Escape key to close overlay
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) {
+          overlay.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+      });
+      
+      // Animate timeline items on scroll
+      const timelineItems = document.querySelectorAll('.timeline-item');
+      
+      const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.3 });
+      
+      // Apply initial styles and observe
+      timelineItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        timelineObserver.observe(item);
+      });
+      
+      // Add hover effects to accreditation badges
+      const accreditationBadges = document.querySelectorAll('.accreditation-badge');
+      
+      accreditationBadges.forEach(badge => {
+        badge.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-5px)';
+        });
+        
+        badge.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+        });
+      });
+      
+      // Add animation to mission/vision cards
+      const missionVisionCards = document.querySelectorAll('.mission-vision-card');
+      
+      missionVisionCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

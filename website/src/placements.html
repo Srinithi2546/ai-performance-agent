@@ -1,0 +1,917 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Placements — Panimalar</title>
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #1a4b8c;
+      --primary-dark: #0d2b5a;
+      --primary-light: #2a6bc5;
+      --secondary: #e63946;
+      --accent: #ff9e00;
+      --success: #28a745;
+      --light: #f4f6f9;
+      --dark: #333;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 8px;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: var(--light);
+      padding: 0;
+      margin: 0;
+    }
+    
+    /* Layout */
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .section {
+      padding: 40px 0;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+      line-height: 1.2;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    h1:after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--accent);
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    
+    p {
+      margin-bottom: 1rem;
+    }
+    
+    .muted {
+      color: var(--gray);
+    }
+    
+    /* Cards */
+    .card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin-bottom: 30px;
+      transition: var(--transition);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .mini-card {
+      background-color: var(--light);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      text-align: center;
+      transition: var(--transition);
+      border: 1px solid var(--light-gray);
+      font-weight: 500;
+    }
+    
+    .mini-card:hover {
+      background-color: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+      cursor: pointer;
+    }
+    
+    /* Grid layouts */
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+    
+    .recruiters-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    .testimonials-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    
+    /* Stats and progress bars */
+    .stat-card {
+      text-align: center;
+      padding: 25px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      border-radius: var(--border-radius);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: rotate(45deg);
+      transition: var(--transition);
+    }
+    
+    .stat-card:hover::before {
+      transform: rotate(45deg) translate(10px, 10px);
+    }
+    
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .progress-container {
+      margin: 25px 0;
+    }
+    
+    .progress-bar {
+      height: 10px;
+      background-color: var(--light-gray);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 5px;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 5px;
+      width: 0;
+      transition: width 1.5s ease-in-out;
+    }
+    
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    
+    /* Testimonials */
+    .testimonial-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 25px;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--accent);
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .testimonial-card::before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--light-gray);
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      line-height: 1;
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    
+    .author-info h4 {
+      margin-bottom: 5px;
+      color: var(--primary);
+    }
+    
+    .author-info p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    
+    /* Recruiter logos */
+    .recruiter-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80px;
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 15px;
+      border: 1px solid var(--light-gray);
+      transition: var(--transition);
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .recruiter-logo:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow);
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    /* Process timeline */
+    .process-timeline {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 40px 0;
+    }
+    
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: var(--light-gray);
+      z-index: 1;
+    }
+    
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+    }
+    
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    
+    .step-label {
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    /* Tabs for placement data */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--light-gray);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: var(--transition);
+    }
+    
+    .tab.active {
+      border-bottom-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Chart container */
+    .chart-container {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: var(--shadow);
+      height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .chart-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--gray);
+      font-style: italic;
+    }
+    
+    /* Department stats */
+    .department-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .department-stat {
+      background-color: var(--light);
+      padding: 15px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .department-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--primary-dark);
+    }
+    
+    .department-percentage {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--success);
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+      
+      .process-timeline {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .process-timeline::before {
+        display: none;
+      }
+      
+      .process-step {
+        flex-direction: row;
+        gap: 15px;
+        text-align: left;
+      }
+      
+      .step-icon {
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+      
+      .recruiters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .wrap {
+        padding: 0 15px;
+      }
+      
+      .section {
+        padding: 30px 0;
+      }
+      
+      .stat-number {
+        font-size: 2.5rem;
+      }
+      
+      .tabs {
+        flex-direction: column;
+      }
+      
+      .tab {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap section">
+    <h1>Placements & Career Development</h1>
+
+    <section class="card">
+      <h2>Training & Placement Cell</h2>
+      <p class="muted">It plays a major role in shaping up the career goals of students. It is a dream of every engineering student to get placed in a top organization. Keeping this key aspect into consideration, it is realized that training is important for engineering students to enhance their employability skills and achieve good placement in various Industries. In our college, apart from technical expertise, students are trained to become a holistic personality equipped with life skills to meet the challenges across the globe.</p>
+      
+      <div class="process-timeline">
+        <div class="process-step">
+          <div class="step-icon">1</div>
+          <div class="step-label">Skill Assessment</div>
+        </div>
+        <div class="process-step">
+          <div class="step-icon">2</div>
+          <div class="step-label">Training Programs</div>
+        </div>
+        <div class="process-step">
+          <div class="step-icon">3</div>
+          <div class="step-label">Mock Interviews</div>
+        </div>
+        <div class="process-step">
+          <div class="step-icon">4</div>
+          <div class="step-label">Placement Drives</div>
+        </div>
+        <div class="process-step">
+          <div class="step-icon">5</div>
+          <div class="step-label">Career Launch</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Placement Statistics</h2>
+      
+      <div class="tabs">
+        <div class="tab active" data-tab="overview">Overview</div>
+        <div class="tab" data-tab="department">By Department</div>
+        <div class="tab" data-tab="trends">Trends</div>
+      </div>
+      
+      <div class="tab-content active" id="overview">
+        <div class="grid stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" id="placementRate">>90%</div>
+            <div class="stat-label">Placement Rate</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="highestPackage">21 LPA</div>
+            <div class="stat-label">Highest Package</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="averagePackage">8.5 LPA</div>
+            <div class="stat-label">Average Package</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="recruiters">300+</div>
+            <div class="stat-label">Recruiting Companies</div>
+          </div>
+        </div>
+        
+        <h3 style="margin-top: 30px;">Year-wise Placement Statistics</h3>
+        <div class="progress-container">
+          <div class="progress-label">
+            <span>2024</span>
+            <span>95%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="95"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-label">
+            <span>2023</span>
+            <span>92%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="92"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-label">
+            <span>2022</span>
+            <span>89%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="89"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-label">
+            <span>2021</span>
+            <span>85%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="85"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tab-content" id="department">
+        <div class="department-stats">
+          <div class="department-stat">
+            <div class="department-name">Computer Science</div>
+            <div class="department-percentage">99%</div>
+          </div>
+          <div class="department-stat">
+            <div class="department-name">Information Technology</div>
+            <div class="department-percentage">97%</div>
+          </div>
+          <div class="department-stat">
+            <div class="department-name">Electronics & Communication</div>
+            <div class="department-percentage">94%</div>
+          </div>
+          <div class="department-stat">
+            <div class="department-name">Mechanical Engineering</div>
+            <div class="department-percentage">91%</div>
+          </div>
+          <div class="department-stat">
+            <div class="department-name">Civil Engineering</div>
+            <div class="department-percentage">88%</div>
+          </div>
+          <div class="department-stat">
+            <div class="department-name">AI & Data Science</div>
+            <div class="department-percentage">96%</div>
+          </div>
+        </div>
+        
+        <div class="chart-container">
+          <div class="chart-placeholder">
+            Department-wise Placement Chart Visualization
+          </div>
+        </div>
+      </div>
+      
+      <div class="tab-content" id="trends">
+        <p class="muted">Placement trends show consistent growth over the past 5 years with increasing participation from top tech companies and higher average packages.</p>
+        
+        <div class="chart-container">
+          <div class="chart-placeholder">
+            Year-wise Placement Trends Chart
+          </div>
+        </div>
+        
+        <div class="mini-card" style="text-align: left; margin-top: 15px;">
+          <h4>Key Trends</h4>
+          <ul style="padding-left: 20px; margin-top: 10px;">
+            <li>25% increase in tech company participation since 2020</li>
+            <li>40% growth in average package over 3 years</li>
+            <li>Expanded international placement opportunities</li>
+            <li>Rising demand for AI/ML and Data Science roles</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Our Top Recruiters</h2>
+      <div class="grid recruiters-grid">
+        <div class="recruiter-logo">Microsoft</div>
+        <div class="recruiter-logo">Amazon</div>
+        <div class="recruiter-logo">Google</div>
+        <div class="recruiter-logo">Infosys</div>
+        <div class="recruiter-logo">TCS</div>
+        <div class="recruiter-logo">Wipro</div>
+        <div class="recruiter-logo">Accenture</div>
+        <div class="recruiter-logo">Cognizant</div>
+        <div class="recruiter-logo">IBM</div>
+        <div class="recruiter-logo">Intel</div>
+        <div class="recruiter-logo">Oracle</div>
+        <div class="recruiter-logo">HCL</div>
+        <div class="recruiter-logo">Dell</div>
+        <div class="recruiter-logo">Capgemini</div>
+        <div class="recruiter-logo">Tech Mahindra</div>
+        <div class="recruiter-logo">HP</div>
+        <div class="recruiter-logo">NOKIA</div>
+        <div class="recruiter-logo">JUSPAY</div>
+        <div class="recruiter-logo">AON</div>
+        <div class="recruiter-logo">Informatica</div>
+        <div class="recruiter-logo">MPHASIS</div>
+        <div class="recruiter-logo">CODINGMART</div>
+        <div class="recruiter-logo">SANMAR</div>
+
+
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Alumni Testimonials</h2>
+      <div class="grid testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">"From this college, I learned a good exposure like multicultural activities, people skills, the ability to work in high pressure situation, disciplined, analytical skills, communication and confidential skills, best teachers guidance , skills and experience help me both in my career and in like in general ."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">V</div>
+            <div class="author-info">
+              <h4>S. Vijay</h4>
+              <p>General Manager</p>
+              <p>RIKUN Manufacturing Pvt Ltd</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Panimalar engineering college is one of the finest private educational institutions of Chennai. It has an advanced curriculum which not only develops students learning knowledge theoretical from the esteemed faculties, but it also helps them to get an insight of the industry through the exposure of industrial experts and practical learning experiences."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JBM</div>
+            <div class="author-info">
+              <h4>James Babu Mathew</h4>
+              <p>PMO</p>
+              <p>Capgemini, Bangalore</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <p class="testimonial-text">"I always Thank Panimalar College for what I am today and close to my Heart. The 2 Years course helped to mold me to reach this Level. Great support from all the management staffs. Personal Development, Workshops , Guest Lectures, Case Studies, Projects, Internship are some of the key methods which college focuses on that helps the student to keep abreast of current Trends."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">SI</div>
+            <div class="author-info">
+              <h4>SARAVANA IYYAPPAN</h4>
+              <p>Deputy Manager</p>
+              <p>Ford Motors Pvt. Ltd</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate statistics counters
+      function animateValue(element, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          const value = Math.floor(progress * (end - start) + start);
+          element.textContent = value + (element.id === 'placementRate' ? '%' : 
+                            element.id === 'highestPackage' ? ' LPA' : 
+                            element.id === 'averagePackage' ? ' LPA' : '+');
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        };
+        window.requestAnimationFrame(step);
+      }
+      
+      // Animate progress bars
+      function animateProgressBars() {
+        const progressBars = document.querySelectorAll('.progress-fill');
+        progressBars.forEach(bar => {
+          const width = bar.getAttribute('data-width');
+          // Animate with delay based on data attribute
+          setTimeout(() => {
+            bar.style.width = width + '%';
+          }, 200);
+        });
+      }
+      
+      // Tab functionality
+      const tabs = document.querySelectorAll('.tab');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabId = tab.getAttribute('data-tab');
+          
+          // Update active tab
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          
+          // Show active tab content
+          tabContents.forEach(content => {
+            content.classList.remove('active');
+            if (content.id === tabId) {
+              content.classList.add('active');
+            }
+          });
+        });
+      });
+      
+      // Initialize animations when element comes into view
+      const observerOptions = {
+        threshold: 0.3,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Animate statistics
+            animateValue(document.getElementById('placementRate'), 0, 98, 1500);
+            animateValue(document.getElementById('highestPackage'), 0, 42, 1500);
+            animateValue(document.getElementById('averagePackage'), 0, 8.5, 1500);
+            animateValue(document.getElementById('recruiters'), 0, 120, 1500);
+            
+            // Animate progress bars
+            setTimeout(animateProgressBars, 500);
+            
+            // Stop observing after animation
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+      
+      // Observe the placement statistics card
+      const statsCard = document.querySelector('.card:nth-child(2)');
+      if (statsCard) {
+        observer.observe(statsCard);
+      }
+      
+      // Add hover effects to recruiter logos
+      const recruiterLogos = document.querySelectorAll('.recruiter-logo');
+      recruiterLogos.forEach(logo => {
+        logo.addEventListener('mouseenter', function() {
+          this.style.transform = 'scale(1.05)';
+          this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+        });
+        
+        logo.addEventListener('mouseleave', function() {
+          this.style.transform = 'scale(1)';
+          this.style.boxShadow = 'none';
+        });
+      });
+      
+      // Add testimonial carousel functionality
+      let currentTestimonial = 0;
+      const testimonials = document.querySelectorAll('.testimonial-card');
+      
+      function showTestimonial(index) {
+        testimonials.forEach((testimonial, i) => {
+          testimonial.style.opacity = i === index ? '1' : '0.7';
+          testimonial.style.transform = i === index ? 'scale(1)' : 'scale(0.95)';
+        });
+      }
+      
+      // Initialize testimonial display
+      if (testimonials.length > 0) {
+        showTestimonial(currentTestimonial);
+        
+        // Auto-rotate testimonials
+        setInterval(() => {
+          currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+          showTestimonial(currentTestimonial);
+        }, 5000);
+      }
+      
+      // Add click to focus on testimonials
+      testimonials.forEach((testimonial, index) => {
+        testimonial.addEventListener('click', () => {
+          currentTestimonial = index;
+          showTestimonial(currentTestimonial);
+        });
+      });
+      
+      // Animate process steps on scroll
+      const processSteps = document.querySelectorAll('.process-step');
+      
+      const stepsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            let delay = 0;
+            processSteps.forEach(step => {
+              setTimeout(() => {
+                step.style.opacity = '1';
+                step.style.transform = 'translateY(0)';
+              }, delay);
+              delay += 200;
+            });
+          }
+        });
+      }, { threshold: 0.5 });
+      
+      // Apply initial styles and observe
+      processSteps.forEach(step => {
+        step.style.opacity = '0';
+        step.style.transform = 'translateY(20px)';
+        step.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      });
+      
+      const processTimeline = document.querySelector('.process-timeline');
+      if (processTimeline) {
+        stepsObserver.observe(processTimeline);
+      }
+      
+      // Add department stats animation
+      const departmentStats = document.querySelectorAll('.department-stat');
+      
+      const deptObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            let delay = 0;
+            departmentStats.forEach(stat => {
+              setTimeout(() => {
+                stat.style.opacity = '1';
+                stat.style.transform = 'translateX(0)';
+              }, delay);
+              delay += 100;
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+      
+      // Apply initial styles and observe
+      departmentStats.forEach(stat => {
+        stat.style.opacity = '0';
+        stat.style.transform = 'translateX(-20px)';
+        stat.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      });
+      
+      const deptSection = document.getElementById('department');
+      if (deptSection) {
+        deptObserver.observe(deptSection);
+      }
+    });
+  </script>
+</body>
+</html>

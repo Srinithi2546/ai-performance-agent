@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Courses — Panimalar</title>
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #1a4b8c;
+      --primary-dark: #0d2b5a;
+      --primary-light: #2a6bc5;
+      --secondary: #e63946;
+      --accent: #ff9e00;
+      --light: #f4f6f9;
+      --dark: #333;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 8px;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: var(--light);
+      padding: 0;
+      margin: 0;
+    }
+    
+    /* Layout */
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .section {
+      padding: 40px 0;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+      line-height: 1.2;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    h1:after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--accent);
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--light-gray);
+    }
+    
+    h3 {
+      font-size: 1.4rem;
+      color: var(--primary);
+    }
+    
+    p {
+      margin-bottom: 1rem;
+    }
+    
+    .muted {
+      color: var(--gray);
+    }
+    
+    .meta {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    
+    /* Cards */
+    .card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .course-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 25px;
+      transition: var(--transition);
+      border-left: 4px solid var(--primary);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Grid layouts */
+    .grid {
+      display: grid;
+      gap: 25px;
+    }
+    
+    .course-grid {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    
+    /* Links and buttons */
+    .link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: auto;
+      padding-top: 15px;
+    }
+    
+    .link:hover {
+      text-decoration: underline;
+      color: var(--primary-dark);
+    }
+    
+    .btn-detail {
+      background-color: var(--primary);
+      color: white;
+      padding: 8px 16px;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-block;
+      margin-top: 15px;
+    }
+    
+    .btn-detail:hover {
+      background-color: var(--primary-dark);
+      text-decoration: none;
+      transform: translateY(-2px);
+    }
+    
+    /* Course detail overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .course-detail {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: 30px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(20px);
+      transition: var(--transition);
+    }
+    
+    .overlay.active .course-detail {
+      transform: translateY(0);
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray);
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+    
+    .close-btn:hover {
+      background-color: var(--light-gray);
+      color: var(--dark);
+    }
+    
+    .course-header {
+      margin-bottom: 20px;
+      padding-right: 40px;
+    }
+    
+    .course-meta {
+      display: flex;
+      gap: 20px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+    
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background-color: var(--light);
+      padding: 5px 10px;
+      border-radius: var(--border-radius);
+      font-size: 0.9rem;
+    }
+    
+    .course-content {
+      margin-top: 20px;
+    }
+    
+    .course-section {
+      margin-bottom: 25px;
+    }
+    
+    .course-section h4 {
+      margin-bottom: 10px;
+      color: var(--primary);
+      border-bottom: 1px solid var(--light-gray);
+      padding-bottom: 5px;
+    }
+    
+    .syllabus-list, .faculty-list {
+      list-style-type: none;
+    }
+    
+    .syllabus-list li, .faculty-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    
+    .syllabus-list li:last-child, .faculty-list li:last-child {
+      border-bottom: none;
+    }
+    
+    /* Quick navigation */
+    .quick-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .nav-btn {
+      background-color: white;
+      border: 1px solid var(--light-gray);
+      padding: 10px 20px;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+    
+    .nav-btn:hover, .nav-btn.active {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .card {
+        padding: 20px;
+      }
+      
+      .course-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .course-detail {
+        padding: 20px;
+      }
+      
+      .course-meta {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .wrap {
+        padding: 0 15px;
+      }
+      
+      .section {
+        padding: 30px 0;
+      }
+      
+      .quick-nav {
+        flex-direction: column;
+      }
+      
+      .nav-btn {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Quick Navigation -->
+  <div class="wrap section">
+    <div class="quick-nav">
+      <button class="nav-btn active" data-target="ug">UG Courses</button>
+      <button class="nav-btn" data-target="pg">PG Courses</button>
+      <button class="nav-btn" data-target="sh">Science & Humanities</button>
+    </div>
+  </div>
+
+  <main class="wrap section">
+    <h1>Our Courses</h1>
+
+    <section id="ug" class="card course-section">
+      <h2>UG Courses — B.E / B.Tech</h2>
+      <div class="grid course-grid">
+        <article class="course-card" data-course="cse">
+          <h3>CSE — Computer Science & Engineering</h3>
+          <p class="meta">Duration: 4 years • Intake: 120</p>
+          <p class="muted">Eligibility: 10 & +2 with Maths, Physics, Chemistry</p>
+          <a class="btn-detail" href="?course=cse">Know More</a>
+        </article>
+
+        <article class="course-card" data-course="ece">
+          <h3>ECE — Electronics & Communication</h3>
+          <p class="meta">Duration: 4 years • Intake: 120</p>
+          <p class="muted">Eligibility: 10+2 with Maths, Physics, Chemistry</p>
+          <a class="btn-detail" href="?course=ece">Know More</a>
+        </article>
+
+        <article class="course-card" data-course="it">
+          <h3>IT — Information Technology</h3>
+          <p class="meta">Duration: 4 years • Intake: 60</p>
+          <p class="muted">Eligibility: 10+2 with Maths, Physics, Chemistry</p>
+          <a class="btn-detail" href="?course=it">Know More</a>
+        </article>
+
+        <article class="course-card" data-course="aids">
+          <h3>AI & Data Science</h3>
+          <p class="meta">Duration: 4 years • Intake: 60</p>
+          <p class="muted">Eligibility: 10+2 with Maths, Physics, Chemistry</p>
+          <a class="btn-detail" href="?course=aids">Know More</a>
+        </article>
+
+        <article class="course-card" data-course="mech">
+          <h3>Mechanical Engineering</h3>
+          <p class="meta">Duration: 4 years • Intake: 120</p>
+          <p class="muted">Eligibility: 10+2 with Maths, Physics, Chemistry</p>
+          <a class="btn-detail" href="?course=mech">Know More</a>
+        </article>
+
+        <article class="course-card" data-course="eee">
+          <h3>Electrical and Electronics Engineering</h3>
+          <p class="meta">Duration: 4 years • Intake: 60</p>
+          <p class="muted">Eligibility: 10+2 with Maths, Physics, Chemistry</p>
+          <a class="btn-detail" href="?course=eee">Know More</a>
+        </article>
+
+        <article class="course-card" data-course="aiml">
+          <h3>AI & Machine Learning</h3>
+          <p class="meta">Duration: 4 years • Intake: 60</p>
+          <p class="muted">Eligibility: 10+2 with Maths, Physics, Chemistry</p>
+          <a class="btn-detail" href="?course=aiml">Know More</a>
+        </article>
+
+        <article class="course-card" data-course="csbs">
+          <h3>Computer Science and Business Systems</h3>
+          <p class="meta">Duration: 4 years • Intake: 60</p>
+          <p class="muted">Eligibility: 10+2 with Maths, Physics, Chemistry</p>
+          <a class="btn-detail" href="?course=csbs">Know More</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="pg" class="card course-section" style="display: none;">
+      <h2>PG Courses — M.E / M.Tech / MBA</h2>
+      <div class="grid course-grid">
+        <article class="course-card" data-course="me-cse">
+          <h3>M.E. Computer Science & Engineering</h3>
+          <p class="meta">Duration: 2 years • Intake: 30</p>
+          <p class="muted">Specializations: AI, Data Science, Cyber Security</p>
+          <a class="btn-detail" href="?course=me-cse">Know More</a>
+        </article>
+
+        <article class="course-card" data-course="me-ece">
+          <h3>M.E. Communication Systems</h3>
+          <p class="meta">Duration: 2 years • Intake: 30</p>
+          <p class="muted">Specializations: VLSI, Embedded Systems</p>
+          <a class="btn-detail" href="?course=me-es">Know More</a>
+        </article>
+
+        <article class="course-card" data-course="mba">
+          <h3>MBA — Master of Business Administration</h3>
+          <p class="meta">Duration: 2 years • Intake: 60</p>
+          <p class="muted">Specializations: Finance, Marketing, HR</p>
+          <a class="btn-detail" href="?course=mba">Know More</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="sh" class="card course-section" style="display: none;">
+      <h2>Science & Humanities</h2>
+      <div class="grid course-grid">
+        <article class="course-card">
+          <h3>Science and Humanities</h3>
+          <p class="meta">Faculty: 15 members • Labs: 2</p>
+          <p class="muted">Courses: Engineering Mathematics, Statistics, Discrete Mathematics</p>
+        </article>
+
+        
+      </div>
+    </section>
+  </main>
+
+  <!-- Course Detail Overlay -->
+  <div class="overlay" id="courseOverlay">
+    <div class="course-detail" id="courseDetail">
+      <button class="close-btn" id="closeOverlay">&times;</button>
+      <div id="courseContent">
+        <!-- Dynamic content will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Course data
+    const courseData = {
+      'cse': {
+        title: 'Computer Science & Engineering',
+        code: 'CSE',
+        level: 'UG',
+        duration: '4 years',
+        intake: 720,
+        eligibility: '10+2 with Mathematics, Physics, and Chemistry',
+        overview: 'The Computer Science and Engineering Department offers both Undergraduate and Postgraduate programs. It provides an excellent ambiance for students to learn and acquire the necessary skills required by the IT Industry. Technological innovation is so rapid in this field that continuous education is essential to enhance the skill set of students keeping in pace with the current trends. The department has experienced faculty members who are fully committed to teaching and research.',
+        syllabus: [
+          'Data Structures and Algorithms',
+          'Object-Oriented Programming',
+          'Database Management Systems',
+          'Computer Networks',
+          'Operating Systems',
+          'Software Engineering',
+          'Artificial Intelligence',
+          'Machine Learning',
+          'Web Technologies',
+          'Cyber Security'
+        ],
+        faculty: [
+          'Dr.L.JABASHEELA , M.E .,Ph.D. -Head of Department',
+          'Prof. Dr. KAVITHA SUBRAMANI',
+          'Prof. Dr. SUBEDHA V'
+        ],
+        labs: ['Programming Lab', 'Database Lab', 'Networking Lab', 'AI Lab'],
+        career: 'Software Developer, Data Scientist, System Analyst, Web Developer, AI Engineer'
+      },
+      'ece': {
+        title: 'Electronics & Communication Engineering',
+        code: 'ECE',
+        level: 'UG',
+        duration: '4 years',
+        intake: 620,
+        eligibility: '10+2 with Mathematics, Physics, and Chemistry',
+        overview: 'The main focus of the ECE department is to impart technical education that meets international standards in the field of Electronics and Communication for the benefit of the society. The department has three centres of excellence to promote research and development with industry collaboration. Centre of excellence in Robotics helps to foster innovation and develop industrial automation solutions. Centre of Excellence in Drones helps to train and upskill students for the future of unmanned aerial vehicle technology to make them industry ready and empower their technical skills in the drone technology space. Centre of Excellence in Flextronics supported by TANSAM and TIDCO is developed to upskill students in Electronic service & Manufacturing. Centre of Excellence for Automotive Design, supported by UNO Minda, bridges the gap between engineering education and evolving industry needs in smart automotive systems, embedded solutions, and advanced manufacturing technologies. These centres of excellence serve as a hub for research, innovation, and entrepreneurship in various technologies. The Centre for research on Reconfigurable Wireless Technologies is developed to promote research and publications in various domains spanning from basics of circuits to emerging 6G wireless technologies.',
+        syllabus: [
+          'Electronic Circuits',
+          'Digital Signal Processing',
+          'Communication Systems',
+          'Microprocessors',
+          'VLSI Design',
+          'Embedded Systems',
+          'Antenna Theory',
+          'Optical Communication'
+        ],
+        faculty: [
+          'Dr. Sanjay Verma - Head of Department',
+          'Prof. Dr. T. Jayanthy',
+          'Prof. Dr. M.P.Chitra',
+          
+        ],
+        labs: ['Electronics Lab', 'Communication Lab', 'VLSI Lab', 'Embedded Systems Lab'],
+        career: 'Electronics Engineer, Communication Engineer, VLSI Designer, Embedded Systems Engineer'
+      },
+      'it': {
+        title: 'Information Technology',
+        code: 'IT',
+        level: 'UG',
+        duration: '4 years',
+        intake: 600,
+        eligibility: '10+2 with Mathematics, Physics, and Chemistry',
+        overview: 'The Department of Information Technology, established in 2000, is recognized by AICTE and affiliated with Anna University. Accredited by NBA, the department offers a four-year degree program in Information Technology, renowned for its academic excellence. It has significantly contributed to transforming students into accomplished IT Professionals. The department boasts state-of-the-art facilities, including advanced laboratories, well-equipped seminar halls, smart classrooms, and a library that supports e-learning.',
+        syllabus: [
+          'Information Systems',
+          'Network Security',
+          'Web Development',
+          'Cloud Computing',
+          'Data Analytics',
+          'IT Project Management',
+          'Enterprise Systems'
+        ],
+        faculty: [
+          'Dr.M.Helda Mercy, M.E, Ph.D - Head of Department',
+          'Dr. S. Prasanna Devi - Chief Academic Officer',
+          'Dr. D.Karunkuzhali',
+          
+        ],
+        labs: ['Networking Lab', 'Web Development Lab', 'Database Lab', 'Security Lab'],
+        career: 'IT Consultant, Network Administrator, System Analyst, Web Developer, Database Administrator'
+      },
+      'ai': {
+        title: 'Artificial Intelligence & Data Science',
+        code: 'AI & DS',
+        level: 'UG',
+        duration: '4 years',
+        intake: 60,
+        eligibility: '10+2 with Mathematics, Physics, and Chemistry',
+        overview: 'B.Tech. in Artificial Intelligence & Data Science (AI & DS) is a four year full time UG degree program with the skills to sensitize students to perform intelligent data analysis and imparting knowledge of advanced innovations like Artificial Intelligence, Data Science, Machine Learning, Deep Learning, Robotics and Natural Language Processing (NLP). The Department also offers Ph.D. Program (Full Time/Part Time) from the year 2022. The department aims to train students as leaders, researchers and entrepreneur’s in the field of AI & DS in world class infrastructure, curriculum and comprehensive hands on experience through industry connect programs. Industry Institute Collaborations are extensively carried out by providing guest lectures from industry experts, industrial visits, workshops, hands - on training sessions and etc. The department is emphasized on research, design and development of next generation cutting-edge technologies in the area of Artificial Intelligence and Data Analytics.',
+        syllabus: [
+          'Machine Learning',
+          'Deep Learning',
+          'Natural Language Processing',
+          'Computer Vision',
+          'Big Data Analytics',
+          'Statistical Methods',
+          'Data Visualization',
+          'Reinforcement Learning'
+        ],
+        faculty: [
+          'Dr. S. MALATHI - Head of Department',
+          'Prof. Dr. A. JOSHI ',
+          'Dr. T. KALAICHELVI ',
+        ],
+        labs: ['AI Lab', 'Data Science Lab', 'NLP Lab', 'Computer Vision Lab'],
+        career: 'AI Engineer, Data Scientist, Machine Learning Engineer, Business Analyst, Research Scientist'
+      },
+      'me-cse': {
+        title: 'M.E. Computer Science & Engineering',
+        code: 'M.E. CSE',
+        level: 'PG',
+        duration: '2 years',
+        intake: 30,
+        eligibility: 'B.E/B.Tech in CSE/IT or equivalent with minimum 60% marks',
+        overview: 'The Computer Science and Engineering Department offers both Undergraduate and Postgraduate programs. It provides an excellent ambiance for students to learn and acquire the necessary skills required by the IT Industry. Technological innovation is so rapid in this field that continuous education is essential to enhance the skill set of students keeping in pace with the current trends. The department has experienced faculty members who are fully committed to teaching and research.',
+        specializations: ['Artificial Intelligence', 'Data Science', 'Cyber Security', 'Cloud Computing'],
+        syllabus: [
+          'Advanced Algorithms',
+          'Research Methodology',
+          'Machine Learning',
+          'Big Data Analytics',
+          'Network Security',
+          'Cloud Architecture'
+        ],
+        faculty: [
+          'Dr.L.JABASHEELA , M.E .,Ph.D. -Head of Department',
+          'Prof. Dr. KAVITHA SUBRAMANI',
+          'Prof. Dr. SUBEDHA V'
+        ],
+        labs: ['Advanced Computing Lab', 'AI Research Lab', 'Security Lab'],
+        career: 'Research Scientist, Senior Software Engineer, Data Architect, Security Analyst, AI Specialist'
+      },
+      'mba': {
+        title: 'Master of Business Administration',
+        code: 'MBA',
+        level: 'PG',
+        duration: '2 years',
+        intake: 60,
+        eligibility: 'Bachelor\'s degree in any discipline with minimum 50% marks',
+        overview: 'The MBA program develops business leaders with strong analytical, strategic, and leadership skills. The curriculum combines theoretical knowledge with practical applications through case studies and industry projects.',
+        specializations: ['Finance', 'Marketing', 'Human Resources', 'Operations'],
+        syllabus: [
+          'Managerial Economics',
+          'Financial Management',
+          'Marketing Management',
+          'Organizational Behavior',
+          'Operations Research',
+          'Strategic Management'
+        ],
+        faculty: [
+          'Dr. P. Srinivasan - Program Director',
+          
+        ],
+        labs: ['Business Analytics Lab', 'Finance Lab', 'Marketing Research Center'],
+        career: 'Business Analyst, Marketing Manager, HR Manager, Financial Analyst, Operations Manager'
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const navButtons = document.querySelectorAll('.nav-btn');
+      const courseSections = document.querySelectorAll('.course-section');
+      const courseCards = document.querySelectorAll('.course-card');
+      const overlay = document.getElementById('courseOverlay');
+      const courseContent = document.getElementById('courseContent');
+      const closeBtn = document.getElementById('closeOverlay');
+      
+      // Navigation between course sections
+      navButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          
+          // Update active button
+          navButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Show target section, hide others
+          courseSections.forEach(section => {
+            if (section.id === targetId) {
+              section.style.display = 'block';
+            } else {
+              section.style.display = 'none';
+            }
+          });
+          
+          // Scroll to section
+          document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+      
+      // Open course detail overlay
+      courseCards.forEach(card => {
+        const detailBtn = card.querySelector('.btn-detail');
+        if (detailBtn) {
+          detailBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const courseId = card.getAttribute('data-course');
+            if (courseId && courseData[courseId]) {
+              showCourseDetail(courseData[courseId]);
+            }
+          });
+        }
+      });
+      
+      // Close overlay
+      closeBtn.addEventListener('click', closeOverlay);
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          closeOverlay();
+        }
+      });
+      
+      // Escape key to close overlay
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) {
+          closeOverlay();
+        }
+      });
+      
+      // Check URL parameters for course details
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseParam = urlParams.get('course');
+      if (courseParam && courseData[courseParam]) {
+        showCourseDetail(courseData[courseParam]);
+      }
+      
+      // Function to show course details
+      function showCourseDetail(course) {
+        let html = `
+          <div class="course-header">
+            <h2>${course.title} (${course.code})</h2>
+            <div class="course-meta">
+              <div class="meta-item">📚 ${course.level} Program</div>
+              <div class="meta-item">⏱ ${course.duration}</div>
+              <div class="meta-item">👥 Intake: ${course.intake}</div>
+            </div>
+            <p><strong>Eligibility:</strong> ${course.eligibility}</p>
+          </div>
+          
+          <div class="course-content">
+            <div class="course-section">
+              <h4>Overview</h4>
+              <p>${course.overview}</p>
+            </div>
+            
+            ${course.specializations ? `
+            <div class="course-section">
+              <h4>Specializations</h4>
+              <p>${course.specializations.join(', ')}</p>
+            </div>
+            ` : ''}
+            
+            <div class="course-section">
+              <h4>Key Subjects</h4>
+              <ul class="syllabus-list">
+                ${course.syllabus.map(subject => <li>${subject}</li>).join('')}
+              </ul>
+            </div>
+            
+            <div class="course-section">
+              <h4>Faculty</h4>
+              <ul class="faculty-list">
+                ${course.faculty.map(faculty => <li>${faculty}</li>).join('')}
+              </ul>
+            </div>
+            
+            <div class="course-section">
+              <h4>Laboratories</h4>
+              <p>${course.labs.join(', ')}</p>
+            </div>
+            
+            <div class="course-section">
+              <h4>Career Opportunities</h4>
+              <p>${course.career}</p>
+            </div>
+          </div>
+        `;
+        
+        courseContent.innerHTML = html;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      
+      // Function to close overlay
+      function closeOverlay() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        
+        // Remove course parameter from URL without reloading
+        const url = new URL(window.location);
+        url.searchParams.delete('course');
+        window.history.replaceState({}, '', url);
+      }
+      
+      // Add animation to course cards on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+      
+      // Apply initial styles and observe
+      courseCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(card);
+      });
+    });
+  </script>
+</body>
+</html>

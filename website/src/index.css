@@ -1,0 +1,54 @@
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  background: #0f0f0f;
+  color: #f0f0f0;
+}
+
+/* Remove old restrictive root styles — let App control layout */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: block;
+  text-align: left;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: var(--sans);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}

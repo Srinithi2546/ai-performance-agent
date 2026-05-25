@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Panimalar Engineering </title>
+  <meta name="description" content="Panimalar Engineering — Demo college website with courses, admissions, placements and chatbot." />
+  
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #1a4b8c;
+      --primary-dark: #0d2b5a;
+      --primary-light: #2a6bc5;
+      --secondary: #e63946;
+      --accent: #ff9e00;
+      --light: #f4f6f9;
+      --dark: #333;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --border-radius: 8px;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: var(--light);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .wrap {
+      padding: 0 20px;
+    }
+    
+    .section {
+      padding: 60px 0;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+      line-height: 1.2;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    h2:after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      margin-top: 10px;
+      border-radius: 2px;
+    }
+    
+    p {
+      margin-bottom: 1rem;
+    }
+    
+    .lead {
+      font-size: 1.25rem;
+      font-weight: 300;
+    }
+    
+    .muted {
+      color: var(--gray);
+    }
+    
+    .small {
+      font-size: 0.875rem;
+    }
+    
+    /* Links and buttons */
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    a:hover {
+      color: var(--primary-dark);
+    }
+    
+    .link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .link:hover {
+      text-decoration: underline;
+    }
+    
+    .btn-primary, .btn-secondary {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      color: white;
+    }
+    
+    .btn-secondary {
+      background-color: var(--light-gray);
+      color: var(--dark);
+    }
+    
+    .btn-secondary:hover {
+      background-color: #d8dde2;
+    }
+    
+    .btn-apply {
+      background-color: var(--secondary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+    }
+    
+    .btn-apply:hover {
+      background-color: #c1121f;
+      color: white;
+    }
+    
+    /* Header */
+    .site-header {
+      background-color: white;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+    }
+    
+    .main-nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+    
+    .main-nav a {
+      color: var(--dark);
+      font-weight: 500;
+    }
+    
+    .main-nav a:hover {
+      color: var(--primary);
+    }
+    
+    .dropdown {
+      position: relative;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 200px;
+      box-shadow: var(--shadow);
+      border-radius: var(--border-radius);
+      z-index: 1;
+      padding: 10px 0;
+    }
+    
+    .dropdown-content a {
+      display: block;
+      padding: 8px 20px;
+      color: var(--dark);
+    }
+    
+    .dropdown-content a:hover {
+      background-color: var(--light-gray);
+    }
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    /* Hero section */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 80px 0;
+    }
+    
+    .hero h1 {
+      color: white;
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .hero .lead {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+    }
+    
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .chip {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      font-size: 0.875rem;
+    }
+    
+    .quick-strip {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .stat-row {
+      display: flex;
+      gap: 30px;
+    }
+    
+    .stat-row li {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .stat-row strong {
+      font-size: 2rem;
+      margin-bottom: 5px;
+    }
+    
+    .stat-row span {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+    
+    .hero-image-wrap {
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    
+    .hero-image-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    /* Cards */
+    .card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+    }
+    
+    .mini-card {
+      background-color: var(--light);
+      border-radius: var(--border-radius);
+      padding: 20px;
+    }
+    
+    .course-card {
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 25px;
+      transition: var(--transition);
+    }
+    
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .course-card h3 {
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    
+    .meta {
+      color: var(--gray);
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+    
+    /* Layout components */
+    .section-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+    }
+    
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 20px;
+    }
+    
+    .grid {
+      display: grid;
+      gap: 30px;
+    }
+    
+    .course-grid {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    
+    .facilities {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    
+    .fac-item {
+      background-color: var(--light);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      font-weight: 500;
+    }
+    
+    .info-list {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+    
+    .info-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    
+    .events li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    
+    /* Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .gallery-grid img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .gallery-grid img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Footer */
+    .site-footer {
+      background-color: var(--primary-dark);
+      color: white;
+      padding: 40px 0;
+    }
+    
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .brand-strong {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .footer-links a:hover {
+      color: white;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .section-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+      
+      .main-nav {
+        display: none;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.75rem;
+      }
+      
+      .hero {
+        padding: 60px 0;
+      }
+      
+      .stat-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .footer-inner {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .hero-cta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .quick-strip {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .split {
+        grid-template-columns: 1fr;
+      }
+      
+      .course-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .facilities {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+  
+  <!-- 🆕 ADD CHATBOT STYLES -->
+  <link rel="stylesheet" href="chatbot/chatbot-styles.css">
+</head>
+
+<body class="site-root">
+  <header class="site-header">
+    <div class="wrap header-inner container">
+      <a class="brand" href="/index.html" aria-label="Panimalar Engineering">
+        <span class="logo">P</span>
+        <span class="brand-text">Panimalar Engineering </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <div class="dropdown">
+          <a href="/courses.html" class="dropbtn">Courses ▾</a>
+          <div class="dropdown-content">
+            <a href="/courses.html#ug">UG Courses</a>
+            <a href="/courses.html#pg">PG Courses</a>
+            <a href="/courses.html#sh">Science & Humanities</a>
+            <a href="/courses.html">All Courses</a>
+          </div>
+        </div>
+        <a href="/admissions.html">Admissions</a>
+        <a href="/placements.html">Placements</a>
+        <a href="/gallery.html">Gallery</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="link small" href="/login.html">Login</a>
+        <a class="btn-apply" href="/admissions.html">Apply Now</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid container">
+        <div class="hero-left">
+          <h1>Panimalar Engineering — Learn. Build. Lead.</h1>
+          <p class="lead">Panimalar Engineering College, a Christian Minority Institution of Higher Education governed by JAISAKTHI Educational Trust aims at imparting quality engineering and management education for the aspiring youth.</p>
+
+          <div class="hero-cta">
+            <a class="btn-primary" href="/admissions.html">Apply — Admissions</a>
+            <a class="chip" href="tel:+919043891272">Admission Contact: +91-90438 91272 / 9043890983</a>
+          </div>
+
+          <div class="quick-strip">
+            <span class="chip">Counselling Code: <strong>1210</strong></span>
+            <span class="chip">Office Hours: Mon–Sat 9:30–17:30</span>
+          </div>
+
+          <ul class="stat-row">
+            <li><strong>300+</strong><span>Top recruiters</span></li>
+            <li><strong>15+</strong><span>Labs</span></li>
+            <li><strong>>90%</strong><span>Placement rate</span></li>
+          </ul>
+        </div>
+
+        <div class="hero-right">
+          <picture class="hero-image-wrap">
+            <img alt="Panimalar campus" src="https://www.panimalar.ac.in/assets/images/AboutUs/about-us-banner-img.jpg">
+          </picture>
+        </div>
+      </div>
+    </section>
+
+    <section id="about-preview" class="wrap section card container">
+      <div class="section-grid">
+        <div>
+          <h2>About College</h2>
+          <p class="muted">Panimalar Engineering College  — established 2000. This sprawling campus provides a holistic education in an ambience that makes no compromise on discipline, dedication and commitment. It strives to inculcate the spirit of learning in the campus offering state of art facilities to the students. The college ensures that the students who pass out of the college, turn out to be academically brilliant, morally upright and empowered individuals.</p>
+
+          <div class="split">
+            <div>
+              <h4>Vision</h4>
+              <p class="muted small">To transform the budding engineers into academically excellent, highly intellectual and self disciplined engineering graduates to mould them as good citizens with the spirit of integrity and morality that would cater to the needs of our nation.</p>
+              
+            </div>
+            <div>
+              <h4>Mission</h4>
+              <p class="muted small">• To impart quality education with high standards of excellence in engineering and technology.<br>• To provide an excellent infrastructure in a serene and conducive atmosphere that would motivate the students in their pursuit of knowledge in the field of engineering and technology.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="mini-card">
+          <h4>Quick Info</h4>
+          <ul class="info-list">
+            <li>Admission Contact: +91-90438 91272</li>
+            <li>Counselling Code: 1210</li>
+            <li>Apply Now link available</li>
+          </ul>
+          <a class="btn-secondary" href="/about.html">Read More</a>
+        </aside>
+      </div>
+    </section>
+
+    <section id="courses-preview" class="wrap section container">
+      <h2>Courses Preview</h2>
+      <div class="grid course-grid">
+        <article class="course-card">
+          <h3>CSE — Computer Science & Engineering</h3>
+          <p class="meta">Duration: 4 years • Intake: 120</p>
+          <p class="muted small">Eligibility: 10+2 with Maths</p>
+          <a class="link" href="/courses.html?course=cse">Know more →</a>
+        </article>
+
+        <article class="course-card">
+          <h3>ECE — Electronics & Communication</h3>
+          <p class="meta">Duration: 4 years • Intake: 120</p>
+          <p class="muted small">Eligibility: 10+2 with Maths</p>
+          <a class="link" href="/courses.html?course=ece">Know more →</a>
+        </article>
+
+        <article class="course-card">
+          <h3>AI & DS</h3>
+          <p class="meta">Duration: 4 years • Intake: 60</p>
+          <p class="muted small">Eligibility: 10+2 with Maths</p>
+          <a class="link" href="/courses.html?course=ai">Know more →</a>
+        </article>
+
+        <article class="course-card">
+          <h3>IT — Information Technology</h3>
+          <p class="meta">Duration: 4 years • Intake: 60</p>
+          <p class="muted small">Eligibility: 10+2 with Maths</p>
+          <a class="link" href="/courses.html?course=it">Know more →</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section card container">
+      <h2>Facilities</h2>
+      <div class="facilities">
+        <div class="fac-item">Library & E-resources</div>
+        <div class="fac-item">Green Campus</div>
+        <div class="fac-item">Examination Facilities</div>
+        <div class="fac-item">University Offices-Identified</div>
+        <div class="fac-item">Infrastructures</div>
+        <div class="fac-item">IT Infrastructure</div>
+        <div class="fac-item">Mess</div>
+        <div class="fac-item">Sports</div>
+        <div class="fac-item">Hostel</div>
+        <div class="fac-item">Transport</div>
+        <div class="fac-item">ATM Facilities</div>
+        <div class="fac-item">Treatment Plants</div>
+      </div>
+    </section>
+
+    <section class="wrap section container">
+      <div class="two-col">
+        <div class="card">
+          <h3>Highlights</h3>
+          <ul class="muted">
+            <li>1629 University Ranks & 19 Gold Medals.</li>
+            <li>First College in India to convene 7 CEOs for a conference on BlockChain and IoT.</li>
+            <li>Panimalar Engineering College was honoured in NOKIA Chennai Technology Day.</li>
+            <li>First College In India to host Indian Space Research Organisation (ISRO's) NAFED</li>
+            <li>Partnership with Birmingham City University for Metaverse Lab.</li>
+            <li>Collaboration with ZOHO, Chennai-based Saas Unicorn.</li>
+            <li>Research Collaboration with Delphi TVS Chennai.</li>
+            <li>Collaboration with Mindarika Pvt Ltd, Leaders in Automotive Manufacturing.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Approvals & Accreditations</h3>
+          <ul class="events">
+            <li><strong>UGC</strong> Approvals </li>
+            <li><strong>AICTE</strong> Approvals </li>
+            <li><strong>NBA</strong> National Board of Accreditation </li>
+            <li><strong>Anna University</strong> - Research Centre Recognition </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section gallery-preview container">
+      <h2>Gallery</h2>
+      <div class="gallery-grid">
+        <img src="https://www.panimalar.ac.in/assets/images/GreenCampus/1.png" alt="Campus building">
+        <img src="https://www.panimalar.ac.in/assets/images/facilities/library/5.png" alt="Engineering lab">
+        <img src="https://www.panimalar.ac.in/assets/images/BE-CSE/achievements/ach1-1024x1024.jpg" alt="Achievements">
+        <img src="https://www.panimalar.ac.in/assets/images/facilities/library/4.png" alt="Library">
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner container">
+      <div>
+        <div class="brand-strong">Panimalar Engineering</div>
+        <div class="small muted">© 2025. All rights reserved.</div>
+      </div>
+      <nav class="footer-links">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/sitemap.xml">Sitemap</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- 🆕 ADD CHATBOT SCRIPTS
+  <!-- Load initialization script first (optional) -->
+  <!-- <script src="chatbot/chatbot-init.js"></script> -->
+  <!-- Load main chatbot widget -->
+  <!-- <script src="chatbot/chatbot-widget.js"></script> -->
+  
+</body>
+</html>
