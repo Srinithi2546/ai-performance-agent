@@ -5,7 +5,7 @@ import { onCLS, onLCP, onINP } from "web-vitals"
  * Monitors Web Vitals, JavaScript errors, and API failures
  */
 
-const BACKEND_URL = "http://ai-performance-agent.onrender.com"
+const BACKEND_URL = "https://ai-performance-agent.onrender.com"
 const SESSION_ID = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 const NAMESPACE = "[PulseGuard]"
 
