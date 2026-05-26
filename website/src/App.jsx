@@ -1,7 +1,7 @@
 import { useState } from "react"
 import "./sdk.js"
 
-const BACKEND_URL = "http://localhost:8000"
+const BACKEND_URL = "http://ai-performance-agent.onrender.com"
 
 async function sendError(data) {
   try {
@@ -177,7 +177,7 @@ function GoodPerformanceDemo({ onBack }) {
 
         <div style={styles.footer("good")}>
           🟢 PulseGuard AI is monitoring this page's performance in real-time →{" "}
-          <a href="http://localhost:3000" target="_blank" rel="noreferrer" style={{ color: "#34d399", textDecoration: "underline" }}>
+          <a href="https://ai-performance-agent.vercel.app/" target="_blank" rel="noreferrer" style={{ color: "#34d399", textDecoration: "underline" }}>
             View Dashboard
           </a>
         </div>
@@ -383,7 +383,7 @@ function BadPerformanceDemo({ onBack }) {
             </div>
             <div style={{ marginTop: 12, fontSize: "0.8rem", color: "#64748b" }}>
               💡 Open{" "}
-              <a href="http://localhost:3000" target="_blank" rel="noreferrer" style={{ color: "#f87171" }}>
+              <a href="https://ai-performance-agent.vercel.app/" target="_blank" rel="noreferrer" style={{ color: "#f87171" }}>
                 Dashboard → Errors tab
               </a>{" "}
               to see these in real-time
@@ -393,7 +393,7 @@ function BadPerformanceDemo({ onBack }) {
 
         <div style={styles.footer("bad")}>
           🔴 PulseGuard AI is tracking all performance issues on this page →{" "}
-          <a href="http://localhost:3000" target="_blank" rel="noreferrer" style={{ color: "#f87171", textDecoration: "underline" }}>
+          <a href="https://ai-performance-agent.vercel.app/" target="_blank" rel="noreferrer" style={{ color: "#f87171", textDecoration: "underline" }}>
             View Dashboard
           </a>
         </div>
@@ -562,7 +562,7 @@ function HomeSelector({ onSelect }) {
       }}>
         <span style={{ fontSize: 22 }}>💡</span>
         <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.88rem", margin: 0 }}>
-          Open the <a href="http://localhost:3000" target="_blank" rel="noreferrer" style={{ color: "#a78bfa", textDecoration: "none", fontWeight: 600 }}>PulseGuard Dashboard at localhost:3000</a> side-by-side to watch metrics and errors update in real-time as you interact with either demo.
+          Open the <a href="https://ai-performance-agent.vercel.app/" target="_blank" rel="noreferrer" style={{ color: "#a78bfa", textDecoration: "none", fontWeight: 600 }}>PulseGuard Dashboard</a> side-by-side to watch metrics and errors update in real-time as you interact with either demo.
         </p>
       </div>
 
