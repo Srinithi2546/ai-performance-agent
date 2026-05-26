@@ -58,7 +58,7 @@ export class WebSocketManager {
 
   connect() {
     try {
-      const wsUrl = `ws://ai-performance-agent.onrender.com/ws`
+      const wsUrl = `wss://ai-performance-agent.onrender.com/ws`
       console.log("Connecting to WebSocket:", wsUrl)
       
       this.ws = new WebSocket(wsUrl)
