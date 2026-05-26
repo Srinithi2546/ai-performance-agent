@@ -1,7 +1,7 @@
 import { useState } from "react"
 import "./sdk.js"
 
-const BACKEND_URL = "http://ai-performance-agent.onrender.com"
+const BACKEND_URL = "https://ai-performance-agent.onrender.com"
 
 async function sendError(data) {
   try {
