@@ -17,13 +17,13 @@ import os
 class Metrics(BaseModel):
     type: Optional[str] = None
     name: Optional[str] = None
-    value: Optional[float] = None
+    value: Optional[Any] = None
     rating: Optional[str] = None
-    delta: Optional[float] = None
+    delta: Optional[Any] = None
     sessionId: Optional[str] = None
     url: Optional[str] = None
     resource: Optional[str] = None
-    duration: Optional[float] = None
+    duration: Optional[Any] = None
 
 
 class ErrorData(BaseModel):
