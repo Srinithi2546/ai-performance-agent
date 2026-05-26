@@ -1,30 +1,36 @@
 /**
- * PulseGuard API Service
- * Production Ready Version
- * Uses polling instead of WebSocket
+ * API Service for Dashboard
+ * PulseGuard AI
  */
 
 const API_URL = "https://ai-performance-agent.onrender.com"
 
+/* ============================================
+   API METHODS
+============================================ */
+
 export const api = {
-  // =========================================
+
+  // ============================================
   // Dashboard Data
-  // =========================================
+  // ============================================
+
   async getDashboard() {
+
     try {
+
       const response = await fetch(
         `${API_URL}/dashboard`
       )
 
       if (!response.ok) {
-        throw new Error(
-          `Dashboard Error: ${response.status}`
-        )
+        throw new Error("Failed to fetch dashboard")
       }
 
       return await response.json()
 
     } catch (error) {
+
       console.error(
         "Dashboard API Error:",
         error
@@ -34,24 +40,26 @@ export const api = {
     }
   },
 
-  // =========================================
-  // Deployment Analysis
-  // =========================================
+  // ============================================
+  // Deployment Data
+  // ============================================
+
   async getDeployments() {
+
     try {
+
       const response = await fetch(
         `${API_URL}/deployments`
       )
 
       if (!response.ok) {
-        throw new Error(
-          `Deployment Error: ${response.status}`
-        )
+        throw new Error("Failed to fetch deployments")
       }
 
       return await response.json()
 
     } catch (error) {
+
       console.error(
         "Deployments API Error:",
         error
@@ -61,26 +69,28 @@ export const api = {
     }
   },
 
-  // =========================================
+  // ============================================
   // Health Check
-  // =========================================
+  // ============================================
+
   async getHealth() {
+
     try {
+
       const response = await fetch(
         `${API_URL}/`
       )
 
       if (!response.ok) {
-        throw new Error(
-          `Health Error: ${response.status}`
-        )
+        throw new Error("Backend unavailable")
       }
 
       return await response.json()
 
     } catch (error) {
+
       console.error(
-        "Health Check Error:",
+        "Health check error:",
         error
       )
 
@@ -89,85 +99,83 @@ export const api = {
   },
 }
 
-/**
- * =========================================
- * Polling Manager
- * Replaces WebSocket
- * =========================================
- */
+/* ============================================
+   SIMPLE POLLING MANAGER
+============================================ */
 
 export class PollingManager {
-  constructor(onUpdate) {
-    this.onUpdate = onUpdate
-    this.interval = null
-    this.isRunning = false
+
+  constructor(callback, interval = 3000) {
+
+    this.callback = callback
+
+    this.interval = interval
+
+    this.timer = null
   }
 
-  // =========================================
-  // Start Polling
-  // =========================================
-  start() {
-    if (this.isRunning) return
+  // ============================================
+  // START POLLING
+  // ============================================
 
-    this.isRunning = true
+  connect() {
 
-    console.log(
-      "🚀 Starting dashboard polling..."
-    )
+    this.fetchData()
 
-    // Initial fetch
-    this.fetchUpdates()
+    this.timer = setInterval(() => {
 
-    // Poll every 3 seconds
-    this.interval = setInterval(() => {
-      this.fetchUpdates()
-    }, 3000)
+      this.fetchData()
+
+    }, this.interval)
   }
 
-  // =========================================
-  // Fetch Updates
-  // =========================================
-  async fetchUpdates() {
+  // ============================================
+  // FETCH DASHBOARD
+  // ============================================
+
+  async fetchData() {
+
     try {
-      const dashboardData =
-        await api.getDashboard()
 
-      const deploymentData =
-        await api.getDeployments()
+      const data = await api.getDashboard()
 
-      this.onUpdate({
-        dashboard: dashboardData,
-        deployments: deploymentData,
-      })
+      if (data && this.callback) {
+
+        this.callback({
+          type: "dashboard",
+          data,
+        })
+      }
 
     } catch (error) {
+
       console.error(
-        "Polling Error:",
+        "Polling error:",
         error
       )
     }
   }
 
-  // =========================================
-  // Stop Polling
-  // =========================================
-  stop() {
-    if (this.interval) {
-      clearInterval(this.interval)
-      this.interval = null
+  // ============================================
+  // STOP POLLING
+  // ============================================
+
+  disconnect() {
+
+    if (this.timer) {
+
+      clearInterval(this.timer)
+
+      this.timer = null
     }
-
-    this.isRunning = false
-
-    console.log(
-      "🛑 Polling stopped"
-    )
   }
 
-  // =========================================
-  // Status
-  // =========================================
+  // ============================================
+  // STATUS
+  // ============================================
+
   isConnected() {
-    return this.isRunning
+
+    return this.timer !== null
   }
 }
