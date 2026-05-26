@@ -7,7 +7,17 @@ function sendMetric(metric) {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(metric)
+    body: JSON.stringify({
+  type: metric.type || "web_vital",
+  name: metric.name || "",
+  value: metric.value || 0,
+  rating: metric.rating || "good",
+  delta: metric.delta || 0,
+  sessionId: metric.sessionId || "unknown",
+  url: window.location.href,
+  resource: metric.resource || "",
+  duration: metric.duration || 0
+})
   })
 
   console.log("Metric Sent:", metric)
