@@ -113,7 +113,7 @@ async def home():
 async def receive_metrics(data: Metrics):
 
     try:
-        data = data.dict()
+        data = data.model_dump()
 
         metric_data = {
             **data,
