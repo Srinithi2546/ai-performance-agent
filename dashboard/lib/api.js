@@ -1,123 +1,173 @@
 /**
- * API Service for Dashboard
- * Handles all communication with PulseGuard Backend
+ * PulseGuard API Service
+ * Production Ready Version
+ * Uses polling instead of WebSocket
  */
 
 const API_URL = "https://ai-performance-agent.onrender.com"
 
 export const api = {
-  // Get dashboard data
+  // =========================================
+  // Dashboard Data
+  // =========================================
   async getDashboard() {
     try {
-      const response = await fetch(`${API_URL}/dashboard`)
-      if (!response.ok) throw new Error("Failed to fetch dashboard")
+      const response = await fetch(
+        `${API_URL}/dashboard`
+      )
+
+      if (!response.ok) {
+        throw new Error(
+          `Dashboard Error: ${response.status}`
+        )
+      }
+
       return await response.json()
+
     } catch (error) {
-      console.error("Dashboard API Error:", error)
+      console.error(
+        "Dashboard API Error:",
+        error
+      )
+
       return null
     }
   },
 
-  // Get deployment analysis
+  // =========================================
+  // Deployment Analysis
+  // =========================================
   async getDeployments() {
     try {
-      const response = await fetch(`${API_URL}/deployments`)
-      if (!response.ok) throw new Error("Failed to fetch deployments")
+      const response = await fetch(
+        `${API_URL}/deployments`
+      )
+
+      if (!response.ok) {
+        throw new Error(
+          `Deployment Error: ${response.status}`
+        )
+      }
+
       return await response.json()
+
     } catch (error) {
-      console.error("Deployments API Error:", error)
+      console.error(
+        "Deployments API Error:",
+        error
+      )
+
       return null
     }
   },
 
-  // Get backend health
+  // =========================================
+  // Health Check
+  // =========================================
   async getHealth() {
     try {
-      const response = await fetch(`${API_URL}/`)
-      if (!response.ok) throw new Error("Backend unavailable")
+      const response = await fetch(
+        `${API_URL}/`
+      )
+
+      if (!response.ok) {
+        throw new Error(
+          `Health Error: ${response.status}`
+        )
+      }
+
       return await response.json()
+
     } catch (error) {
-      console.error("Health check error:", error)
+      console.error(
+        "Health Check Error:",
+        error
+      )
+
       return null
     }
   },
 }
 
 /**
- * WebSocket Manager
- * Handles real-time updates from backend
+ * =========================================
+ * Polling Manager
+ * Replaces WebSocket
+ * =========================================
  */
-export class WebSocketManager {
-  constructor(onMessage) {
-    this.ws = null
-    this.onMessage = onMessage
-    this.reconnectAttempts = 0
-    this.maxReconnectAttempts = 5
-    this.reconnectDelay = 2000
+
+export class PollingManager {
+  constructor(onUpdate) {
+    this.onUpdate = onUpdate
+    this.interval = null
+    this.isRunning = false
   }
 
-  connect() {
+  // =========================================
+  // Start Polling
+  // =========================================
+  start() {
+    if (this.isRunning) return
+
+    this.isRunning = true
+
+    console.log(
+      "🚀 Starting dashboard polling..."
+    )
+
+    // Initial fetch
+    this.fetchUpdates()
+
+    // Poll every 3 seconds
+    this.interval = setInterval(() => {
+      this.fetchUpdates()
+    }, 3000)
+  }
+
+  // =========================================
+  // Fetch Updates
+  // =========================================
+  async fetchUpdates() {
     try {
-      const wsUrl = `wss://ai-performance-agent.onrender.com/ws`
-      console.log("Connecting to WebSocket:", wsUrl)
-      
-      this.ws = new WebSocket(wsUrl)
-      
-      this.ws.onopen = () => {
-        console.log("✅ WebSocket connected")
-        this.reconnectAttempts = 0
-        // Send ping to keep connection alive
-        this.keepAlive()
-      }
-      
-      this.ws.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data)
-          this.onMessage(data)
-        } catch (error) {
-          console.error("Failed to parse WebSocket message:", error)
-        }
-      }
-      
-      this.ws.onerror = (error) => {
-        console.error("WebSocket error:", error)
-      }
-      
-      this.ws.onclose = () => {
-        console.log("❌ WebSocket disconnected")
-        this.attemptReconnect()
-      }
+      const dashboardData =
+        await api.getDashboard()
+
+      const deploymentData =
+        await api.getDeployments()
+
+      this.onUpdate({
+        dashboard: dashboardData,
+        deployments: deploymentData,
+      })
+
     } catch (error) {
-      console.error("WebSocket connection error:", error)
-      this.attemptReconnect()
+      console.error(
+        "Polling Error:",
+        error
+      )
     }
   }
 
-  keepAlive() {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send("ping")
-      setTimeout(() => this.keepAlive(), 30000) // Ping every 30s
+  // =========================================
+  // Stop Polling
+  // =========================================
+  stop() {
+    if (this.interval) {
+      clearInterval(this.interval)
+      this.interval = null
     }
+
+    this.isRunning = false
+
+    console.log(
+      "🛑 Polling stopped"
+    )
   }
 
-  attemptReconnect() {
-    if (this.reconnectAttempts < this.maxReconnectAttempts) {
-      this.reconnectAttempts++
-      console.log(`Reconnecting... Attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts}`)
-      setTimeout(() => this.connect(), this.reconnectDelay)
-    } else {
-      console.error("Max reconnection attempts reached")
-    }
-  }
-
-  disconnect() {
-    if (this.ws) {
-      this.ws.close()
-      this.ws = null
-    }
-  }
-
+  // =========================================
+  // Status
+  // =========================================
   isConnected() {
-    return this.ws && this.ws.readyState === WebSocket.OPEN
+    return this.isRunning
   }
 }
