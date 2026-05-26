@@ -2,7 +2,7 @@ import { onCLS, onLCP, onINP } from "web-vitals"
 
 function sendMetric(metric) {
 
-  fetch("http://ai-performance-agent.onrender.com/metrics", {
+  fetch("https://ai-performance-agent.onrender.com/metrics", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -20,7 +20,7 @@ onINP(sendMetric)
 
 window.addEventListener("error", (event) => {
 
-  fetch("http://ai-performance-agent.onrender.com/errors", {
+  fetch("https://ai-performance-agent.onrender.com/errors", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
