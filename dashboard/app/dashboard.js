@@ -14,7 +14,7 @@ import {
 } from "lucide-react"
 import { motion } from "framer-motion"
 import { MetricCard, AIInsights, ErrorTable, APIStats, CardSkeleton } from "@/components/MetricsCard"
-import { api, PollingManaer } from "@/lib/api"
+import { api, PollingManager } from "@/lib/api"
 
 export default function Dashboard() {
   const [activePage, setActivePage] = useState("Overview")
@@ -83,7 +83,7 @@ export default function Dashboard() {
   }
 
   function setupWebSocket() {
-    wsRef.current = new PollingManaer((data) => {
+    wsRef.current = new PollingManager((data) => {
       switch (data.type) {
         case "metric":
           setSummary(data.summary)
