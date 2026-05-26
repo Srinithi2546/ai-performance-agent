@@ -3,7 +3,7 @@
  * Handles all communication with PulseGuard Backend
  */
 
-const API_URL = "http://localhost:8000"
+const API_URL = "https://ai-performance-agent.onrender.com"
 
 export const api = {
   // Get dashboard data
